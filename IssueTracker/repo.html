@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Issue List</title>
+    <meta charset="utf-8">
+    <style>
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .button2 {
+            background-color: #008CBA;
+        }
+        /* Blue */
+        .button3 {
+            background-color: #f44336;
+        }
+        /* Red */
+    </style>
+</head>
+<body ng-app="mainApp">
+    <h2>List of issues created from last {{dateDays}} day(s): </h2>
+
+    <div ng-controller="RepoController">
+        <a ng-href="#/main">Back to search</a>
+        <div ng-hide="prevPage == null">
+            <button ng-click="processPage(prevPage)">Prev</button>
+        </div>
+        <div ng-hide="nextPage == null">
+            <button ng-click="processPage(nextPage)">Next</button>
+        </div>
+    </div>
+        <ul ng-repeat="issuedata in issueList">
+            <li>
+                <ul>
+                    <li><strong>Title:</strong> {{issuedata.title}}
+                    <li><strong>User:</strong> {{issuedata.user}}</li>
+                    <li><strong>Assignee:</strong> {{issuedata.assignee}}</li>
+                    <li>
+                        <div ng-switch="issuedata.isBody">
+                            <div ng-switch-when="true">
+                                <div ng-controller="ngToggler">
+                                    <button class="button button2" ng-click="toggleCustom()">Body</button>
+                                    <span ng-hide="custom">
+                                        {{issuedata.body}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div ng-switch-when="false">
+                                <div ng-controller="ngToggler">
+                                    <button class="button button3" ng-click="toggleCustom()">Body</button>
+                                    <span ng-hide="custom">
+                                        {{issuedata.body}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+</body>
+</html>
